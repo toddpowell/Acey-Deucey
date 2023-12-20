@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import Card from "./components/Card";
 
 function App() {
   let [deck, setDeck] = useState([]);
@@ -13,13 +14,13 @@ function App() {
     deck = createDeck();
     console.log(deck);
     setDeck(deck);
-    renderDeck(deck);
+    // renderDeck(deck);
   }, []);
 
   const [cardNumber, setCardNumber] = useState(0);
 
   function createDeck() {
-    const suits = ["spades", "diamonds", "clubs", "hearts"];
+    const suits = ["c", "d", "h", "s"];
     const names = [
       "2",
       "3",
@@ -59,7 +60,7 @@ function App() {
     }
     console.log(deck);
     setCardNumber(0);
-    renderDeck(deck);
+    // renderDeck(deck);
   }
 
   function dealCard() {
@@ -76,31 +77,41 @@ function App() {
       value: card.value,
     });
     setCardNumber((cardNumber) => cardNumber + 1);
+
+    let dealtCard = document.createElement("div");
+    let img = document.createElement("img");
+    img.id = "card1img";
+    dealtCard.id = "card1";
+    dealtCard.appendChild(img);
+    document.getElementById("card1").innerHTML = "";
+    document.getElementById("card1").appendChild(dealtCard);
+    document.getElementById("card1img").src =
+      "public/images/cards/card_" + card.name + card.suit + ".gif";
   }
 
-  function renderDeck(deck) {
-    document.getElementById("deck").innerHTML = "";
+  // function renderDeck(deck) {
+  //   document.getElementById("deck").innerHTML = "";
 
-    for (let i = 0; i < deck.length; i++) {
-      let card = document.createElement("div");
-      let name = document.createElement("div");
-      let suit = document.createElement("div");
-      let value = document.createElement("div");
-      card.className = "card";
-      name.className = "name";
-      suit.className = "suit " + deck[i].suit;
-      name.className = "value";
+  //   for (let i = 0; i < deck.length; i++) {
+  //     let card = document.createElement("div");
+  //     let name = document.createElement("div");
+  //     let suit = document.createElement("div");
+  //     let value = document.createElement("div");
+  //     card.className = "card";
+  //     name.className = "name";
+  //     suit.className = "suit " + deck[i].suit;
+  //     name.className = "value";
 
-      name.innerHTML = deck[i].name;
-      suit.innerHTML = deck[i].suit;
-      value.innerHTML = deck[i].value;
-      card.appendChild(name);
-      card.appendChild(suit);
-      card.appendChild(value);
+  //     name.innerHTML = deck[i].name;
+  //     suit.innerHTML = deck[i].suit;
+  //     value.innerHTML = deck[i].value;
+  //     card.appendChild(name);
+  //     card.appendChild(suit);
+  //     card.appendChild(value);
 
-      document.getElementById("deck").appendChild(card);
-    }
-  }
+  //     document.getElementById("deck").appendChild(card);
+  //   }
+  // }
 
   return (
     <>
@@ -115,7 +126,9 @@ function App() {
       </div>
       <hr></hr>
       Deck
-      <div id="deck"></div>
+      <div id="card1"></div>
+      <div id="card2"></div>
+      <div id="card3"></div>
     </>
   );
 }
