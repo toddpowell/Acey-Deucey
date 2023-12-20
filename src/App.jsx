@@ -13,7 +13,10 @@ function App() {
     deck = createDeck();
     console.log(deck);
     setDeck(deck);
+    renderDeck(deck);
   }, []);
+
+  const [cardNumber, setCardNumber] = useState(0);
 
   function createDeck() {
     const suits = ["spades", "diamonds", "clubs", "hearts"];
@@ -55,9 +58,16 @@ function App() {
       console.log(i);
     }
     console.log(deck);
+    setCardNumber(0);
+    renderDeck(deck);
   }
 
   function dealCard() {
+    if (cardNumber > 49) {
+      shuffleDeck(deck);
+      setCardNumber((cardNumber) => cardNumber + 1);
+    }
+
     const card = deck.shift();
     console.log(card);
     setCard({
@@ -65,6 +75,31 @@ function App() {
       suit: card.suit,
       value: card.value,
     });
+    setCardNumber((cardNumber) => cardNumber + 1);
+  }
+
+  function renderDeck(deck) {
+    document.getElementById("deck").innerHTML = "";
+
+    for (let i = 0; i < deck.length; i++) {
+      let card = document.createElement("div");
+      let name = document.createElement("div");
+      let suit = document.createElement("div");
+      let value = document.createElement("div");
+      card.className = "card";
+      name.className = "name";
+      suit.className = "suit " + deck[i].suit;
+      name.className = "value";
+
+      name.innerHTML = deck[i].name;
+      suit.innerHTML = deck[i].suit;
+      value.innerHTML = deck[i].value;
+      card.appendChild(name);
+      card.appendChild(suit);
+      card.appendChild(value);
+
+      document.getElementById("deck").appendChild(card);
+    }
   }
 
   return (
@@ -72,8 +107,15 @@ function App() {
       <button onClick={() => shuffleDeck(deck)}>Shuffle Deck</button>
       <button onClick={() => dealCard()}>Deal Card</button>
       <div>
-        Card: {card.name} of {card.suit}, value: {card.value}
+        Card #{cardNumber}
+        <br></br>
+        {card.name} of {card.suit}
+        <br></br>
+        value: {card.value}
       </div>
+      <hr></hr>
+      Deck
+      <div id="deck"></div>
     </>
   );
 }
