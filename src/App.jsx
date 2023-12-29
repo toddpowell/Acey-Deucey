@@ -21,6 +21,17 @@ function App() {
 
   const [cardNumber, setCardNumber] = useState(0);
 
+  const betOptions = [
+    { value: "0", label: "0" },
+    { value: "5", label: "5" },
+    { value: "10", label: "10" },
+    { value: "15", label: "15" },
+    { value: "20", label: "20" },
+    { value: "25", label: "25" },
+  ];
+  const [betValue, setBetValue] = useState(0);
+  console.log("betValue: " + betValue);
+
   function createDeck() {
     const suits = ["c", "d", "h", "s"];
     const names = [
@@ -39,7 +50,6 @@ function App() {
       "A",
     ];
     const cardValues = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-
     let deck = new Array();
 
     for (let i = 0; i < suits.length; i++) {
@@ -104,6 +114,14 @@ function App() {
     shuffleDeck();
   }
 
+  function nextHand() {
+    document.getElementById("card1").innerHTML = "";
+    document.getElementById("card2").innerHTML = "";
+    document.getElementById("card3").innerHTML = "";
+    dealCard();
+    dealCard();
+  }
+
   function onChangeBet() {
     alert("bet");
   }
@@ -123,16 +141,28 @@ function App() {
               <div id="card2">c2</div>
             </div>
           </div>
-          <div className="game-controls">
-            {/* <div className="bets">
-              <input type="radio" name="gender" value="male" id="male" />
-              <label htmlFor="male">Male</label>
-              <input type="radio" name="gender" value="female" id="female" />
-              <label htmlFor="female">Female</label>
-              <input type="radio" name="gender" value="other" id="other" />
-              <label htmlFor="other">Other</label>
-            </div> */}
-            <button onClick={() => dealCard()}>Deal Card</button>
+          <div className="game-controls-wrapper">
+            <div className="game-controls">
+              {" "}
+              <button onClick={() => nextHand()}>Next Hand</button>
+              <div className="bet-options">
+                <h3>Bet: </h3>
+                {betOptions.map((betOption) => (
+                  <div key={betOption.value}>
+                    <input
+                      type="radio"
+                      name="gender"
+                      value={betOption.value}
+                      id={betOption.value}
+                      checked={betValue === betOption.value}
+                      onChange={(e) => setBetValue(e.target.value)}
+                    />
+                    <label htmlFor={betOption.value}>{betOption.value}</label>
+                  </div>
+                ))}
+              </div>
+              <button onClick={() => dealCard()}>Deal Card</button>
+            </div>
           </div>
         </div>
       </div>

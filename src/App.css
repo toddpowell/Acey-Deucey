@@ -84,8 +84,31 @@
   /* align-content: space-between; */
 }
 
-.game-controls {
+.game-controls-wrapper {
   position: absolute;
-  top: 580px;
-  left: 46%;
+  bottom: 250px;
+  left: 350px;
+}
+.game-controls {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.bet-options {
+  display: flex;
+  align-items: center;
+  margin: 0px 25px 0px 25px;
+}
+.bet-options h3 {
+  margin-right: 5px;
+}
+.bet-options div {
+  border: 1px solid gray;
+}
+.bet-options label {
+  margin-right: 10px;
+}
+.bet-options button {
+  padding: 5px;
 }
