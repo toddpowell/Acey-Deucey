@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./components/Card";
 
+let handCardNum = 1;
+
 function App() {
   let [deck, setDeck] = useState([]);
   let [card, setCard] = useState({
@@ -36,13 +38,13 @@ function App() {
       "K",
       "A",
     ];
-    const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+    const cardValues = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
     let deck = new Array();
 
     for (let i = 0; i < suits.length; i++) {
       for (let x = 0; x < names.length; x++) {
-        let card = { suit: suits[i], name: names[x], value: values[x] };
+        let card = { suit: suits[i], name: names[x], value: cardValues[x] };
         deck.push(card);
       }
     }
@@ -69,6 +71,9 @@ function App() {
       setCardNumber((cardNumber) => cardNumber + 1);
     }
 
+    if (handCardNum > 3) {
+      handCardNum = 1;
+    }
     const card = deck.shift();
     console.log(card);
     setCard({
@@ -80,55 +85,57 @@ function App() {
 
     let dealtCard = document.createElement("div");
     let img = document.createElement("img");
-    img.id = "card1img";
-    dealtCard.id = "card1";
+    img.id = "card" + handCardNum + "img";
+    dealtCard.id = "card" + handCardNum;
+    dealtCard.classList.add("hide");
     dealtCard.appendChild(img);
-    document.getElementById("card1").innerHTML = "";
-    document.getElementById("card1").appendChild(dealtCard);
-    document.getElementById("card1img").src =
+    document.getElementById("card" + handCardNum).innerHTML = "";
+    document.getElementById("card" + handCardNum).appendChild(dealtCard);
+    document.getElementById("card" + handCardNum + "img").src =
       "public/images/cards/card_" + card.name + card.suit + ".gif";
+
+    handCardNum++;
   }
 
-  // function renderDeck(deck) {
-  //   document.getElementById("deck").innerHTML = "";
+  function newGame() {
+    // Clear cards from table
+    // Reset chip count
+    // Shuffle deck
+    shuffleDeck();
+  }
 
-  //   for (let i = 0; i < deck.length; i++) {
-  //     let card = document.createElement("div");
-  //     let name = document.createElement("div");
-  //     let suit = document.createElement("div");
-  //     let value = document.createElement("div");
-  //     card.className = "card";
-  //     name.className = "name";
-  //     suit.className = "suit " + deck[i].suit;
-  //     name.className = "value";
-
-  //     name.innerHTML = deck[i].name;
-  //     suit.innerHTML = deck[i].suit;
-  //     value.innerHTML = deck[i].value;
-  //     card.appendChild(name);
-  //     card.appendChild(suit);
-  //     card.appendChild(value);
-
-  //     document.getElementById("deck").appendChild(card);
-  //   }
-  // }
+  function onChangeBet() {
+    alert("bet");
+  }
 
   return (
     <>
-      <button onClick={() => shuffleDeck(deck)}>Shuffle Deck</button>
-      <button onClick={() => dealCard()}>Deal Card</button>
-      <div>
-        Card #{cardNumber}
-        <br></br>
-        {card.name} of {card.suit}
-        <br></br>
-        value: {card.value}
+      <div className="main-wrapper">
+        <div className="menu-bar">
+          <button onClick={() => newGame(deck)}>New Game</button>{" "}
+          {/* <button onClick={() => shuffleDeck(deck)}>Shuffle Deck</button> */}
+        </div>
+        <div className="game-table">
+          <div className="card-flop-wrapper">
+            <div className="card-flop">
+              <div id="card1">c1</div>
+              <div id="card3">c3</div>
+              <div id="card2">c2</div>
+            </div>
+          </div>
+          <div className="game-controls">
+            {/* <div className="bets">
+              <input type="radio" name="gender" value="male" id="male" />
+              <label htmlFor="male">Male</label>
+              <input type="radio" name="gender" value="female" id="female" />
+              <label htmlFor="female">Female</label>
+              <input type="radio" name="gender" value="other" id="other" />
+              <label htmlFor="other">Other</label>
+            </div> */}
+            <button onClick={() => dealCard()}>Deal Card</button>
+          </div>
+        </div>
       </div>
-      <hr></hr>
-      Deck
-      <div id="card1"></div>
-      <div id="card2"></div>
-      <div id="card3"></div>
     </>
   );
 }

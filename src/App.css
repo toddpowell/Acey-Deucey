@@ -40,3 +40,52 @@
 .read-the-docs {
   color: #888;
 }
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* background-color:rgb(45, 242, 85); */
+  width: 1034px;
+}
+
+.menu-bar {
+  display: flex;
+  justify-content: center;
+  height: 45px;
+  background-color: tan;
+}
+.menu-bar button {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.game-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-image: url("public/images/old_west_table.jpg");
+  width: 100%;
+  height: 669px;
+  top: 20px;
+}
+
+.card-flop-wrapper {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: -50px;
+}
+
+.card-flop {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  /* align-content: space-between; */
+}
+
+.game-controls {
+  position: absolute;
+  top: 580px;
+  left: 46%;
+}
