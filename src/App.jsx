@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
+let deck = new Array();
 let handCardNum = 1;
 let handCardArray = [];
 
 function App() {
   const [message, setMessage] = useState("");
-  let [deck, setDeck] = useState([]);
+  // let [deck, setDeck] = useState([]);
   let [card, setCard] = useState({
     suit: "",
     name: "",
@@ -21,7 +22,7 @@ function App() {
     document.getElementById("show-card-btn").disabled = true;
     deck = createDeck();
     console.log(deck);
-    setDeck(deck);
+    // setDeck(deck);
   }, []);
 
   const [cardNumber, setCardNumber] = useState(0);
@@ -55,7 +56,6 @@ function App() {
       "A",
     ];
     const cardValues = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-    let deck = new Array();
 
     for (let i = 0; i < suits.length; i++) {
       for (let x = 0; x < names.length; x++) {
@@ -68,9 +68,8 @@ function App() {
   }
 
   // Fisher-Yates
-  function shuffleDeck(deck) {
-    const deckSize = 52;
-    for (let i = 52; i > 0; i--) {
+  function shuffleDeck() {
+    for (let i = 51; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [deck[i], deck[j]] = [deck[j], deck[i]];
       console.log(i);
@@ -81,7 +80,7 @@ function App() {
 
   function dealCard() {
     if (cardNumber > 49) {
-      shuffleDeck(deck);
+      shuffleDeck();
       setCardNumber((cardNumber) => cardNumber + 1);
     }
 
@@ -120,11 +119,16 @@ function App() {
   }
 
   function newGame() {
+    deck.splice(0, deck.length);
+    createDeck();
+    console.log(deck);
+
     document.getElementById("next-hand-btn").disabled = false;
     document.getElementById("show-card-btn").disabled = true;
     document.getElementById("card1").innerHTML = "";
     document.getElementById("card2").innerHTML = "";
     document.getElementById("card3").innerHTML = "";
+
     setPot(0);
     setFunds(100);
     shuffleDeck();
@@ -138,6 +142,7 @@ function App() {
     document.getElementById("card2").innerHTML = "";
     document.getElementById("card3").innerHTML = "";
     setPot(5);
+    handleBet(0);
     setTempFunds(funds - 5);
     dealCard();
     dealCard();
@@ -183,8 +188,8 @@ function App() {
     <>
       <div className="main-wrapper">
         <div className="menu-bar">
-          <button onClick={() => newGame(deck)}>New Game</button>{" "}
-          <button onClick={() => shuffleDeck(deck)}>Shuffle Deck</button>
+          <button onClick={() => newGame()}>New Game</button>{" "}
+          <button onClick={() => shuffleDeck()}>Shuffle Deck</button>
         </div>
         <div className="game-table">
           <div className="funds">Funds: ${funds}</div>
@@ -215,7 +220,7 @@ function App() {
                   <div key={betOption.value}>
                     <input
                       type="radio"
-                      name="gender"
+                      name="bet"
                       value={betOption.value}
                       id={betOption.value}
                       checked={betValue === betOption.value}
