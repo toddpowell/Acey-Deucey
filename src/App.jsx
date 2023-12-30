@@ -96,8 +96,8 @@ function App() {
     let dealtCard = document.createElement("div");
     let img = document.createElement("img");
     img.id = "card" + handCardNum + "img";
-    dealtCard.id = "card" + handCardNum;
-    dealtCard.classList.add("hide");
+    // dealtCard.id = "card" + handCardNum;
+    // dealtCard.classList.add("hide");
     dealtCard.appendChild(img);
     document.getElementById("card" + handCardNum).innerHTML = "";
     document.getElementById("card" + handCardNum).appendChild(dealtCard);
@@ -111,6 +111,9 @@ function App() {
     // Clear cards from table
     // Reset chip count
     // Shuffle deck
+    document.getElementById("card1").innerHTML = "";
+    document.getElementById("card2").innerHTML = "";
+    document.getElementById("card3").innerHTML = "";
     shuffleDeck();
   }
 
@@ -134,17 +137,24 @@ function App() {
           {/* <button onClick={() => shuffleDeck(deck)}>Shuffle Deck</button> */}
         </div>
         <div className="game-table">
-          <div className="card-flop-wrapper">
-            <div className="card-flop">
-              <div id="card1">c1</div>
-              <div id="card3">c3</div>
-              <div id="card2">c2</div>
+          <div className="cards-wrapper">
+            <div className="cards">
+              <div className="card" id="card1">
+                c1
+              </div>
+              <div className="card" id="card3">
+                c3
+              </div>
+              <div className="card" id="card2">
+                c2
+              </div>
             </div>
           </div>
           <div className="game-controls-wrapper">
             <div className="game-controls">
-              {" "}
-              <button onClick={() => nextHand()}>Next Hand</button>
+              <div>
+                <button onClick={() => nextHand()}>Next Hand</button>
+              </div>
               <div className="bet-options">
                 <h3>Bet: </h3>
                 {betOptions.map((betOption) => (
@@ -161,7 +171,9 @@ function App() {
                   </div>
                 ))}
               </div>
-              <button onClick={() => dealCard()}>Deal Card</button>
+              <div>
+                <button onClick={() => dealCard()}>Deal Card</button>
+              </div>
             </div>
           </div>
         </div>

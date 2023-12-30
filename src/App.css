@@ -60,16 +60,15 @@
 }
 
 .game-table {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content:flex-end; */
   background-image: url("public/images/old_west_table.jpg");
   width: 100%;
   height: 669px;
-  top: 20px;
 }
 
-.card-flop-wrapper {
+/* .card-flop-wrapper {
   display: flex;
   justify-content: center;
   position: relative;
@@ -81,18 +80,37 @@
   display: flex;
   justify-content: space-between;
   width: 50%;
-  /* align-content: space-between; */
+} */
+
+
+.cards-wrapper {
+  position: absolute;
+  top: 35%;
+  width: 1034px;
+}
+.cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.cards .card {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 118px;
+  height: 170px;
 }
 
 .game-controls-wrapper {
   position: absolute;
-  bottom: 250px;
-  left: 350px;
+  bottom: 210px;
+  width: 1034px;
 }
 .game-controls {
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
 }
 .bet-options {
@@ -108,6 +126,7 @@
 }
 .bet-options label {
   margin-right: 10px;
+  font-weight: bold;
 }
 .bet-options button {
   padding: 5px;
