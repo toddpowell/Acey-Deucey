@@ -77,7 +77,6 @@ function App() {
     }
     console.log(deck);
     setCardNumber(0);
-    // renderDeck(deck);
   }
 
   function dealCard() {
@@ -110,8 +109,7 @@ function App() {
     let dealtCard = document.createElement("div");
     let img = document.createElement("img");
     img.id = "card" + handCardNum + "img";
-    // dealtCard.id = "card" + handCardNum;
-    // dealtCard.classList.add("hide");
+
     dealtCard.appendChild(img);
     document.getElementById("card" + handCardNum).innerHTML = "";
     document.getElementById("card" + handCardNum).appendChild(dealtCard);
@@ -122,9 +120,6 @@ function App() {
   }
 
   function newGame() {
-    // Clear cards from table
-    // Reset chip count
-    // Shuffle deck
     document.getElementById("next-hand-btn").disabled = false;
     document.getElementById("show-card-btn").disabled = true;
     document.getElementById("card1").innerHTML = "";
@@ -143,14 +138,15 @@ function App() {
     document.getElementById("card2").innerHTML = "";
     document.getElementById("card3").innerHTML = "";
     setPot(5);
-    setFunds(funds - 5);
+    setTempFunds(funds - 5);
     dealCard();
     dealCard();
   }
 
   function handleBet(bet) {
     setBetValue(bet);
-    setTempFunds(funds - bet);
+    setPot(5 + Number(bet));
+    setTempFunds(funds - (5 + Number(bet)));
   }
 
   function showCard() {
@@ -164,8 +160,10 @@ function App() {
         handCardArray[2].value < handCardArray[1].value
       ) {
         setMessage("You WIN $" + pot);
+        setFunds(funds + Number(pot));
       } else {
         setMessage("You LOSE $" + pot);
+        setFunds(funds - Number(pot));
       }
     } else {
       if (
@@ -173,8 +171,10 @@ function App() {
         handCardArray[2].value > handCardArray[1].value
       ) {
         setMessage("You WIN $" + pot);
+        setFunds(funds + Number(pot));
       } else {
         setMessage("You LOSE $" + pot);
+        setFunds(funds - Number(pot));
       }
     }
   }
