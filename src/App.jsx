@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import Card from "./components/Card";
 
 let handCardNum = 1;
+let handCardArray = [];
 
 function App() {
+  const [message, setMessage] = useState("");
   let [deck, setDeck] = useState([]);
   let [card, setCard] = useState({
     suit: "",
@@ -12,13 +13,15 @@ function App() {
     value: "",
   });
   const [funds, setFunds] = useState(100);
+  const [tempFunds, setTempFunds] = useState(funds);
   const [pot, setPot] = useState(0);
 
   useEffect(() => {
+    document.getElementById("next-hand-btn").disabled = false;
+    document.getElementById("show-card-btn").disabled = true;
     deck = createDeck();
     console.log(deck);
     setDeck(deck);
-    // renderDeck(deck);
   }, []);
 
   const [cardNumber, setCardNumber] = useState(0);
@@ -85,15 +88,24 @@ function App() {
 
     if (handCardNum > 3) {
       handCardNum = 1;
+      handCardArray.splice(0, handCardArray.length);
     }
     const card = deck.shift();
-    console.log(card);
     setCard({
       name: card.name,
       suit: card.suit,
       value: card.value,
     });
     setCardNumber((cardNumber) => cardNumber + 1);
+
+    let handCard = {
+      name: card.name,
+      suit: card.suit,
+      value: card.value,
+    };
+    handCardArray.push(handCard);
+    // console.log("hand cards");
+    // console.log(handCardArray);
 
     let dealtCard = document.createElement("div");
     let img = document.createElement("img");
@@ -113,6 +125,8 @@ function App() {
     // Clear cards from table
     // Reset chip count
     // Shuffle deck
+    document.getElementById("next-hand-btn").disabled = false;
+    document.getElementById("show-card-btn").disabled = true;
     document.getElementById("card1").innerHTML = "";
     document.getElementById("card2").innerHTML = "";
     document.getElementById("card3").innerHTML = "";
@@ -122,6 +136,9 @@ function App() {
   }
 
   function nextHand() {
+    document.getElementById("next-hand-btn").disabled = true;
+    document.getElementById("show-card-btn").disabled = false;
+    setMessage("");
     document.getElementById("card1").innerHTML = "";
     document.getElementById("card2").innerHTML = "";
     document.getElementById("card3").innerHTML = "";
@@ -131,8 +148,35 @@ function App() {
     dealCard();
   }
 
-  function onChangeBet() {
-    alert("bet");
+  function handleBet(bet) {
+    setBetValue(bet);
+    setTempFunds(funds - bet);
+  }
+
+  function showCard() {
+    document.getElementById("next-hand-btn").disabled = false;
+    document.getElementById("show-card-btn").disabled = true;
+    dealCard();
+
+    if (handCardArray[1].value > handCardArray[0].value) {
+      if (
+        handCardArray[2].value > handCardArray[0].value &&
+        handCardArray[2].value < handCardArray[1].value
+      ) {
+        setMessage("You WIN $" + pot);
+      } else {
+        setMessage("You LOSE $" + pot);
+      }
+    } else {
+      if (
+        handCardArray[2].value < handCardArray[0].value &&
+        handCardArray[2].value > handCardArray[1].value
+      ) {
+        setMessage("You WIN $" + pot);
+      } else {
+        setMessage("You LOSE $" + pot);
+      }
+    }
   }
 
   return (
@@ -140,10 +184,12 @@ function App() {
       <div className="main-wrapper">
         <div className="menu-bar">
           <button onClick={() => newGame(deck)}>New Game</button>{" "}
-          {/* <button onClick={() => shuffleDeck(deck)}>Shuffle Deck</button> */}
+          <button onClick={() => shuffleDeck(deck)}>Shuffle Deck</button>
         </div>
         <div className="game-table">
-          <div className="funds">${funds}</div>
+          <div className="funds">Funds: ${funds}</div>
+          <div className="temp funds">Temp: ${tempFunds}</div>
+          <div className="funds">Bet: ${betValue}</div>
           <div className="cards-wrapper">
             <div className="cards">
               <div className="card" id="card1"></div>
@@ -152,12 +198,16 @@ function App() {
             </div>
           </div>
 
+          <div className="message">{message}</div>
+
           <div className="game-controls-wrapper">
-            <div className="pot">Pot: ${pot}</div>
+            <div className="message">Pot: ${pot}</div>
             <div className="ante-msg">$5 ante</div>
             <div className="game-controls">
               <div>
-                <button onClick={() => nextHand()}>Next Hand</button>
+                <button id="next-hand-btn" onClick={() => nextHand()}>
+                  Next Hand
+                </button>
               </div>
               <div className="bet-options">
                 <h3>Bet: </h3>
@@ -169,14 +219,16 @@ function App() {
                       value={betOption.value}
                       id={betOption.value}
                       checked={betValue === betOption.value}
-                      onChange={(e) => setBetValue(e.target.value)}
+                      onChange={(e) => handleBet(e.target.value)}
                     />
                     <label htmlFor={betOption.value}>{betOption.value}</label>
                   </div>
                 ))}
               </div>
               <div>
-                <button onClick={() => dealCard()}>Deal Card</button>
+                <button id="show-card-btn" onClick={() => showCard()}>
+                  Show Card
+                </button>
               </div>
             </div>
           </div>
