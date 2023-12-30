@@ -131,6 +131,7 @@ function App() {
 
     setPot(0);
     setFunds(100);
+    setTempFunds(100);
     shuffleDeck();
   }
 
