@@ -68,20 +68,19 @@
   height: 669px;
 }
 
-/* .card-flop-wrapper {
+.funds {
   display: flex;
-  justify-content: center;
-  position: relative;
-  top: -50px;
+  justify-content: flex-start;
+  padding-left: 25px;
+  padding-top: 10px;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
-.card-flop {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-} */
-
+.pot {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 
 .cards-wrapper {
   position: absolute;

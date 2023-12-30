@@ -11,6 +11,8 @@ function App() {
     name: "",
     value: "",
   });
+  const [funds, setFunds] = useState(100);
+  const [pot, setPot] = useState(0);
 
   useEffect(() => {
     deck = createDeck();
@@ -114,6 +116,8 @@ function App() {
     document.getElementById("card1").innerHTML = "";
     document.getElementById("card2").innerHTML = "";
     document.getElementById("card3").innerHTML = "";
+    setPot(0);
+    setFunds(100);
     shuffleDeck();
   }
 
@@ -121,6 +125,8 @@ function App() {
     document.getElementById("card1").innerHTML = "";
     document.getElementById("card2").innerHTML = "";
     document.getElementById("card3").innerHTML = "";
+    setPot(5);
+    setFunds(funds - 5);
     dealCard();
     dealCard();
   }
@@ -137,20 +143,18 @@ function App() {
           {/* <button onClick={() => shuffleDeck(deck)}>Shuffle Deck</button> */}
         </div>
         <div className="game-table">
+          <div className="funds">${funds}</div>
           <div className="cards-wrapper">
             <div className="cards">
-              <div className="card" id="card1">
-                c1
-              </div>
-              <div className="card" id="card3">
-                c3
-              </div>
-              <div className="card" id="card2">
-                c2
-              </div>
+              <div className="card" id="card1"></div>
+              <div className="card" id="card3"></div>
+              <div className="card" id="card2"></div>
             </div>
           </div>
+
           <div className="game-controls-wrapper">
+            <div className="pot">Pot: ${pot}</div>
+            <div className="ante-msg">$5 ante</div>
             <div className="game-controls">
               <div>
                 <button onClick={() => nextHand()}>Next Hand</button>
