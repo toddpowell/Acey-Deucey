@@ -80,6 +80,13 @@
 .message {
   font-size: 1.5rem;
   font-weight: bold;
+  position: relative;
+  top: 115px;
+}
+
+.pot-msg {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .cards-wrapper {

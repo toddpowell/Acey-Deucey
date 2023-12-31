@@ -204,8 +204,8 @@ function App() {
         </div>
         <div className="game-table">
           <div className="funds">Funds: ${funds}</div>
-          <div className="temp funds">Temp: ${tempFunds}</div>
-          <div className="funds">Bet: ${betValue}</div>
+          {/* <div className="funds">Temp: ${tempFunds}</div>
+          <div className="funds">Bet: ${betValue}</div> */}
           <div className="cards-wrapper">
             <div className="cards">
               <div className="card" id="card1"></div>
@@ -217,7 +217,7 @@ function App() {
           <div className="message">{message}</div>
 
           <div className="game-controls-wrapper">
-            <div className="message">Pot: ${pot}</div>
+            <div className="pot-msg">Pot: ${pot}</div>
             <div className="ante-msg">$5 ante</div>
             <div className="game-controls">
               <div>
