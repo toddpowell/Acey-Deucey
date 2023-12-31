@@ -21,8 +21,7 @@ function App() {
     document.getElementById("next-hand-btn").disabled = false;
     document.getElementById("show-card-btn").disabled = true;
     deck = createDeck();
-    console.log(deck);
-    // setDeck(deck);
+    shuffleDeck();
   }, []);
 
   const [cardNumber, setCardNumber] = useState(0);
@@ -36,7 +35,6 @@ function App() {
     { value: "25", label: "25" },
   ];
   const [betValue, setBetValue] = useState(0);
-  console.log("betValue: " + betValue);
 
   function createDeck() {
     const suits = ["c", "d", "h", "s"];
@@ -72,9 +70,7 @@ function App() {
     for (let i = 51; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [deck[i], deck[j]] = [deck[j], deck[i]];
-      console.log(i);
     }
-    console.log(deck);
     setCardNumber(0);
   }
 
@@ -102,8 +98,6 @@ function App() {
       value: card.value,
     };
     handCardArray.push(handCard);
-    // console.log("hand cards");
-    // console.log(handCardArray);
 
     let dealtCard = document.createElement("div");
     let img = document.createElement("img");
@@ -121,7 +115,6 @@ function App() {
   function newGame() {
     deck.splice(0, deck.length);
     createDeck();
-    console.log(deck);
 
     document.getElementById("next-hand-btn").disabled = false;
     document.getElementById("show-card-btn").disabled = true;
@@ -190,7 +183,7 @@ function App() {
       <div className="main-wrapper">
         <div className="menu-bar">
           <button onClick={() => newGame()}>New Game</button>{" "}
-          <button onClick={() => shuffleDeck()}>Shuffle Deck</button>
+          {/* <button onClick={() => shuffleDeck()}>Shuffle Deck</button> */}
         </div>
         <div className="game-table">
           <div className="funds">Funds: ${funds}</div>
