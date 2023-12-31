@@ -7,7 +7,6 @@ let handCardArray = [];
 
 function App() {
   const [message, setMessage] = useState("");
-  // let [deck, setDeck] = useState([]);
   let [card, setCard] = useState({
     suit: "",
     name: "",
@@ -200,12 +199,9 @@ function App() {
       <div className="main-wrapper">
         <div className="menu-bar">
           <button onClick={() => newGame()}>New Game</button>{" "}
-          {/* <button onClick={() => shuffleDeck()}>Shuffle Deck</button> */}
         </div>
         <div className="game-table">
           <div className="funds">Funds: ${funds}</div>
-          {/* <div className="funds">Temp: ${tempFunds}</div>
-          <div className="funds">Bet: ${betValue}</div> */}
           <div className="cards-wrapper">
             <div className="cards">
               <div className="card" id="card1"></div>
