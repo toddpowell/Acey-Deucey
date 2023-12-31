@@ -113,22 +113,30 @@ function App() {
   }
 
   function newGame() {
-    deck.splice(0, deck.length);
-    createDeck();
-
+    setMessage("");
     document.getElementById("next-hand-btn").disabled = false;
     document.getElementById("show-card-btn").disabled = true;
     document.getElementById("card1").innerHTML = "";
     document.getElementById("card2").innerHTML = "";
     document.getElementById("card3").innerHTML = "";
 
+    handleBet(0);
+
+    deck.splice(0, deck.length);
+    createDeck();
+    shuffleDeck();
+
     setPot(0);
     setFunds(100);
     setTempFunds(100);
-    shuffleDeck();
   }
 
   function nextHand() {
+    if (funds <= 0) {
+      setMessage("Insufficient funds");
+      document.getElementById("next-hand-btn").disabled = true;
+      return;
+    }
     document.getElementById("next-hand-btn").disabled = true;
     document.getElementById("show-card-btn").disabled = false;
     setMessage("");
@@ -143,9 +151,18 @@ function App() {
   }
 
   function handleBet(bet) {
+    setMessage("");
+
     setBetValue(bet);
     setPot(5 + Number(bet));
     setTempFunds(funds - (5 + Number(bet)));
+
+    if (funds - bet - 5 < 0) {
+      setMessage("Insufficient Funds");
+      document.getElementById("show-card-btn").disabled = true;
+    } else {
+      document.getElementById("show-card-btn").disabled = false;
+    }
   }
 
   function showCard() {
