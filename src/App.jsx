@@ -112,7 +112,7 @@ function App() {
   }
 
   function newGame() {
-    setMessage("");
+    updateMessage("", "black");
     document.getElementById("next-hand-btn").disabled = false;
     document.getElementById("show-card-btn").disabled = true;
     document.getElementById("card1").innerHTML = "";
@@ -131,8 +131,8 @@ function App() {
   }
 
   function nextHand() {
+    updateMessage("", "black");
     if (funds <= 0) {
-      setMessage("Insufficient funds");
       document.getElementById("next-hand-btn").disabled = true;
       return;
     }
@@ -157,7 +157,7 @@ function App() {
     setTempFunds(funds - (5 + Number(bet)));
 
     if (funds - bet - 5 < 0) {
-      setMessage("Insufficient Funds");
+      updateMessage("Insufficient funds", "black");
       document.getElementById("show-card-btn").disabled = true;
     } else {
       document.getElementById("show-card-btn").disabled = false;
@@ -174,24 +174,29 @@ function App() {
         handCardArray[2].value > handCardArray[0].value &&
         handCardArray[2].value < handCardArray[1].value
       ) {
-        setMessage("You WIN $" + pot);
         setFunds(funds + Number(pot));
+        updateMessage("You WIN $" + pot, "blue");
       } else {
-        setMessage("You LOSE $" + pot);
         setFunds(funds - Number(pot));
+        updateMessage("You LOSE $" + pot, "red");
       }
     } else {
       if (
         handCardArray[2].value < handCardArray[0].value &&
         handCardArray[2].value > handCardArray[1].value
       ) {
-        setMessage("You WIN $" + pot);
         setFunds(funds + Number(pot));
+        updateMessage("You WIN $" + pot, "blue");
       } else {
-        setMessage("You LOSE $" + pot);
         setFunds(funds - Number(pot));
+        updateMessage("You LOSE $" + pot, "red");
       }
     }
+  }
+
+  function updateMessage(msg, color) {
+    setMessage(msg);
+    document.documentElement.style.setProperty("--message-color", color);
   }
 
   return (
@@ -210,6 +215,7 @@ function App() {
             </div>
           </div>
 
+          {/* <div className="message" style={{ color: "red" }}> */}
           <div className="message">{message}</div>
 
           <div className="game-controls-wrapper">
